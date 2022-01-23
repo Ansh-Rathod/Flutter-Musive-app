@@ -1,3 +1,3 @@
-const String baseUrl = 'cryptic-forest-99443.herokuapp.com';
+const String baseUrl = '< Backend url >';
 
 const String basePath = '/api/v1';

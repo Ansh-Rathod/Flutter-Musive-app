@@ -7,7 +7,7 @@ Full-stack music player app is written in flutter and dart using node.js music A
 <p align="center">
 <img src="screenshots/logo.jpeg" alt="logo" width="30%"/>
 
-<h3 align="center"><a href="https://github.com/Ansh-Rathod/Flutter-Projectfolio-app/releases/download/v1.0.0/app-armeabi-v7a-release.apk">Download the release APK</a></h3>
+<h3 align="center"><a href="https://github.com/Ansh-Rathod/Flutter-Musive-app/releases/download/v1.0.0/app-armeabi-v7a-release.apk">Download the release APK</a></h3>
 </p>
 
 # Features
