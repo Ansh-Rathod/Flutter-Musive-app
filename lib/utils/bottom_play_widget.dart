@@ -40,7 +40,6 @@ class PlayWidget extends StatelessWidget {
             boxShadow: kElevationToShadow[9],
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(6.0),
             child: Stack(
               children: [
                 CachedNetworkImage(

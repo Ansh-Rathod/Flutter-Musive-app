@@ -61,7 +61,7 @@ class RecentlyPlayedSongs extends StatelessWidget {
               ),
             ),
             title: Text(
-              "Recently Played Songs",
+              "Recently Played",
               style: Theme.of(context).textTheme.headline4,
             ),
           ),
@@ -71,21 +71,32 @@ class RecentlyPlayedSongs extends StatelessWidget {
               valueListenable: Hive.box('RecentlyPlayed').listenable(),
               builder: (context, box, child) {
                 if (box.isEmpty) {
-                  return const Text("no liked songs");
+                  return const SizedBox(
+                    height: 300,
+                    child: Center(
+                      child: Text(
+                        "You don't have any Recently played songs",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  );
                 }
+
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, i) {
                     final info = Hive.box('RecentlyPlayed').getAt(i);
                     data.add(info);
-
                     return Dismissible(
                       key: Key(info['songname'].toString()),
-                      onDismissed: (direction) {
-                        box.deleteAt(i);
+                      onDismissed: (direction) async {
+                        await box.deleteAt(i);
                         context.showSnackBar(
-                            message: "Removed from liked songs.");
+                            message: "Removed from recent songs.");
                       },
                       direction: DismissDirection.endToStart,
                       background: Container(
@@ -100,6 +111,8 @@ class RecentlyPlayedSongs extends StatelessWidget {
                       ),
                       child: ListTile(
                         onTap: () {
+                          data.sort(
+                              (a, b) => a["created"].compareTo(b["created"]));
                           con.playSong(con.converLocalSongToAudio(data), i);
                         },
                         leading: ClipRRect(

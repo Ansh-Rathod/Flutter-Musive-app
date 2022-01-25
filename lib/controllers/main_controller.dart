@@ -19,7 +19,7 @@ class MainController extends ChangeNotifier {
       ),
     ),
   ];
-
+  bool isNext = true;
   AssetsAudioPlayer player = AssetsAudioPlayer.withId('Playing audio');
 
   final List<StreamSubscription> _subscriptions = [];
@@ -56,6 +56,7 @@ class MainController extends ChangeNotifier {
         "cover": myAudio.metas.image!.path,
         "track": myAudio.path,
         "id": myAudio.metas.id,
+        "created": DateTime.now().toString(),
       });
     }));
 
@@ -65,6 +66,7 @@ class MainController extends ChangeNotifier {
       return false;
     }));
     final recentSongs = getRecentlyPlayed();
+    recentSongs.sort((a, b) => a["created"].compareTo(b["created"]));
     if (recentSongs.isNotEmpty) {
       audios.removeAt(0);
     }
@@ -103,10 +105,15 @@ class MainController extends ChangeNotifier {
   }
 
   void playSong(List<Audio> newPlaylist, int initial) async {
-    await player.stop();
-    audios = newPlaylist;
-    await openPlayer(newlist: newPlaylist, initial: initial);
-    await player.play();
+    if (isNext) {
+      isNext = false;
+      await player.pause();
+      await player.stop();
+      audios = newPlaylist;
+      await openPlayer(newlist: newPlaylist, initial: initial);
+      await player.play();
+      isNext = true;
+    }
   }
 
   void changeIndex(int newIndex, int oldIndex) {

@@ -97,7 +97,7 @@ class CustomCupertinoTabBar extends StatelessWidget
     Widget result = DecoratedBox(
       decoration: BoxDecoration(
         border: resolvedBorder,
-        color: backgroundColor,
+        color: Colors.black,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

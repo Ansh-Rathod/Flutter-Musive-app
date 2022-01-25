@@ -38,7 +38,7 @@ class CurrentPlayingSong extends StatelessWidget {
             alignment: Alignment.center,
           ),
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 150, sigmaY: 150),
+            filter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
             child: Container(
               color: Colors.black38,
               child: Padding(
@@ -130,7 +130,7 @@ class CurrentPlayingSong extends StatelessWidget {
                                 const LoadingImage(
                               icon: Icon(
                                 LineIcons.compactDisc,
-                                size: 80,
+                                size: 120,
                               ),
                             ),
                             fit: BoxFit.cover,

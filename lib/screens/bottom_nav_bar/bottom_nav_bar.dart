@@ -137,7 +137,7 @@ class TabNavigator extends StatelessWidget {
     return Navigator(
       key: navigatorKey,
       onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(builder: (context) => child);
+        return CupertinoPageRoute(builder: (context) => child);
       },
     );
   }
