@@ -41,12 +41,16 @@ class RecentSearch extends StatelessWidget {
             valueListenable: Hive.box('Recentsearch').listenable(),
             builder: (context, box, child) {
               if (box.isEmpty) {
-                return const Text(
-                  "no liked songs",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                return const SizedBox(
+                  height: 300,
+                  child: Center(
+                    child: Text(
+                      "Keep Searching..",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                 );
               }
