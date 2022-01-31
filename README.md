@@ -67,6 +67,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com/downlo
 
 [Backend setup](https://github.com/Ansh-Rathod/Musive-Backend)
 you can setup backend on heroku. i have attached some steps for setup in readme file of backend.
+and edit api/url.dart file put your own url in baseUrl variable without "https://"
 
 ### Clone this repository
 
@@ -84,6 +85,7 @@ $ cd Flutter-Musive-app
 
 ```bash
 $ flutter pub get
+
 ```
 
 ### Run the app
