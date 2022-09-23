@@ -1,6 +1,7 @@
 # Musive
 
-Full-stack music player app is written in flutter and dart using node.js music API. Fully Functional music player with UI like Spotify app. Added 500+ royalty-free music and information about artists. Application users can make their own playlist or collect liked songs.
+Full-stack music player app is written in flutter and dart using node.js music API. Fully Functional music player with UI like Spotify app. Added 500+ royalty-free music and information about artists. Application users can make their own playlist or collect liked songs. 
+for backend setup [here](https://github.com/Ansh-Rathod/Musive-Backend)
 
 ## **Demo**
 
@@ -62,6 +63,12 @@ And much more
 
 To clone and run this application, you'll need [Git](https://git-scm.com/downloads) and [Flutter](https://flutter.dev/docs/get-started/install) installed on your computer. From your command line:
 
+### first setup backned from here
+
+[Backend setup](https://github.com/Ansh-Rathod/Musive-Backend)
+you can setup backend on heroku. i have attached some steps for setup in readme file of backend.
+and edit api/url.dart file put your own url in baseUrl variable without "https://"
+
 ### Clone this repository
 
 ```bash
@@ -78,6 +85,7 @@ $ cd Flutter-Musive-app
 
 ```bash
 $ flutter pub get
+
 ```
 
 ### Run the app
