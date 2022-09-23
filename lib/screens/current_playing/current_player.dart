@@ -149,12 +149,12 @@ class _CurrentPlayerState extends State<CurrentPlayer> {
                                 imageUrl: myAudio.metas.image!.path,
                                 fit: BoxFit.cover,
                                 memCacheHeight:
-                                    (300 * devicePexelRatio).round(),
-                                memCacheWidth: (300 * devicePexelRatio).round(),
+                                    (200 * devicePexelRatio).round(),
+                                memCacheWidth: (200 * devicePexelRatio).round(),
                                 maxHeightDiskCache:
-                                    (300 * devicePexelRatio).round(),
+                                    (200 * devicePexelRatio).round(),
                                 maxWidthDiskCache:
-                                    (300 * devicePexelRatio).round(),
+                                    (200 * devicePexelRatio).round(),
                                 progressIndicatorBuilder: (context, url, l) =>
                                     const LoadingImage(
                                   icon: Icon(

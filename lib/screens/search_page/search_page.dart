@@ -99,7 +99,7 @@ class SearchPage extends StatelessWidget {
                     return TagWidget(tag: allTags.sublist(4)[i], con: con);
                   },
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 100),
               ],
             ),
           ),

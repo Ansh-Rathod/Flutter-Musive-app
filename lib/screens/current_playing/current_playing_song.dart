@@ -27,14 +27,13 @@ class CurrentPlayingSong extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+
     return Container(
         child: con.player.builderCurrent(builder: (context, playing) {
       if (playing != null) {
         final myAudio = con.find(con.audios, playing.audio.assetAudioPath);
         return Container(
-          color: Colors.black38,
+          color: Colors.black,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0.0),
             child: Column(
@@ -49,7 +48,7 @@ class CurrentPlayingSong extends StatelessWidget {
                     SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 12),
+                            vertical: 16.0, horizontal: 12),
                         child: Row(
                           children: [
                             IconButton(
@@ -127,10 +126,10 @@ class CurrentPlayingSong extends StatelessWidget {
                       borderRadius: BorderRadius.circular(3),
                       child: CachedNetworkImage(
                         imageUrl: myAudio.metas.image!.path,
-                        memCacheHeight: (500 * devicePexelRatio).round(),
-                        memCacheWidth: (500 * devicePexelRatio).round(),
-                        maxHeightDiskCache: (500 * devicePexelRatio).round(),
-                        maxWidthDiskCache: (500 * devicePexelRatio).round(),
+                        memCacheHeight: (200 * devicePexelRatio).round(),
+                        memCacheWidth: (200 * devicePexelRatio).round(),
+                        maxHeightDiskCache: (200 * devicePexelRatio).round(),
+                        maxWidthDiskCache: (200 * devicePexelRatio).round(),
                         progressIndicatorBuilder: (context, url, l) =>
                             const LoadingImage(
                           icon: Icon(
@@ -273,6 +272,7 @@ class CurrentPlayingSong extends StatelessWidget {
                     ]),
                   ],
                 ),
+                const SizedBox(height: 5),
               ],
             ),
           ),
