@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/repositories/get_artists_data.dart';
+import '../../../controllers/main_controller.dart';
+import '../../../models/loading_enum.dart';
+import '../../../repositories/get_artists_data.dart';
 
 import '../../../models/song_model.dart';
 import '../../../models/user_model.dart';

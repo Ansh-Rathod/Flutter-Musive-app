@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/utils/botttom_sheet_widget.dart';
+import '../../controllers/main_controller.dart';
+import '../../models/loading_enum.dart';
+import '../../utils/botttom_sheet_widget.dart';
 
 import '../../utils/loading.dart';
 import '../../utils/sliver_appbar.dart';
@@ -88,6 +88,16 @@ class ArtistProfile extends StatelessWidget {
                                               state.songs[i].coverImageUrl!,
                                           width: 50,
                                           height: 50,
+                                          maxHeightDiskCache: 100,
+                                          maxWidthDiskCache: 100,
+                                          memCacheHeight: (50 *
+                                                  MediaQuery.of(context)
+                                                      .devicePixelRatio)
+                                              .round(),
+                                          memCacheWidth: (50 *
+                                                  MediaQuery.of(context)
+                                                      .devicePixelRatio)
+                                              .round(),
                                           progressIndicatorBuilder:
                                               (context, url, l) =>
                                                   const LoadingImage(),

@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:spotify_clone/methods/get_time_ago.dart';
-import 'package:spotify_clone/methods/snackbar.dart';
-import 'package:spotify_clone/utils/loading.dart';
+import '../../methods/get_time_ago.dart';
+import '../../methods/snackbar.dart';
+import '../../utils/loading.dart';
 
 class AddToPlaylist extends StatelessWidget {
   final String name;
@@ -186,6 +186,14 @@ class AddToPlaylist extends StatelessWidget {
                           imageUrl: playlists['coverImage'],
                           width: 50,
                           height: 50,
+                          maxHeightDiskCache: 80,
+                          maxWidthDiskCache: 80,
+                          memCacheHeight:
+                              (80 * MediaQuery.of(context).devicePixelRatio)
+                                  .round(),
+                          memCacheWidth:
+                              (80 * MediaQuery.of(context).devicePixelRatio)
+                                  .round(),
                           placeholder: (context, u) => const LoadingImage(
                                 icon: Icon(LineIcons.user),
                               ),

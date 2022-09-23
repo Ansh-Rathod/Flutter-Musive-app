@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/repositories/get_home_page.dart';
+import '../../../models/loading_enum.dart';
+import '../../../models/song_model.dart';
+import '../../../repositories/get_home_page.dart';
 
 import '../../../models/user.dart';
 
@@ -21,6 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
         status: LoadPage.loaded,
       ));
     } catch (e) {
+      print(e.toString());
       emit(state.copyWith(status: LoadPage.error));
     }
   }

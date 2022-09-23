@@ -2,10 +2,10 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/snackbar.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/screens/add_to_playlist/add_to_playlist.dart';
+import '../controllers/main_controller.dart';
+import '../methods/snackbar.dart';
+import '../models/song_model.dart';
+import '../screens/add_to_playlist/add_to_playlist.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'like_button/like_button.dart';
@@ -24,13 +24,15 @@ class BottomSheetWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return Container(
       color: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * .3,
+            height: MediaQuery.of(context).size.height * .2,
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * .4,
@@ -40,6 +42,10 @@ class BottomSheetWidget extends StatelessWidget {
                   aspectRatio: 1,
                   child: CachedNetworkImage(
                     imageUrl: song.coverImageUrl!,
+                    memCacheHeight: (300 * devicePexelRatio).round(),
+                    memCacheWidth: (300 * devicePexelRatio).round(),
+                    maxHeightDiskCache: (300 * devicePexelRatio).round(),
+                    maxWidthDiskCache: (300 * devicePexelRatio).round(),
                     progressIndicatorBuilder: (context, url, l) =>
                         const LoadingImage(),
                     fit: BoxFit.cover,
@@ -62,7 +68,7 @@ class BottomSheetWidget extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text("Listen on spotify",
+                      Text("Listen on Musive",
                           style: TextStyle(color: Colors.white)),
                     ],
                   ),
@@ -144,7 +150,7 @@ class BottomSheetWidget extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (BuildContext context) {
+                  CupertinoPageRoute(builder: (BuildContext context) {
                 return AddToPlaylist(
                   id: song.songid!,
                   cover: song.coverImageUrl!,

@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/string_methods.dart';
-import 'package:spotify_clone/models/catagory.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/screens/genre_page/cubit/genre_cubit.dart';
-import 'package:spotify_clone/utils/botttom_sheet_widget.dart';
-import 'package:spotify_clone/utils/horizontal_songs_list.dart';
-import 'package:spotify_clone/utils/loading.dart';
+import '../../controllers/main_controller.dart';
+import '../../methods/string_methods.dart';
+import '../../models/catagory.dart';
+import '../../models/loading_enum.dart';
+import 'cubit/genre_cubit.dart';
+import '../../utils/botttom_sheet_widget.dart';
+import '../../utils/horizontal_songs_list.dart';
+import '../../utils/loading.dart';
 
 class GenrePage extends StatelessWidget {
   final TagsModel tag;
@@ -23,6 +23,8 @@ class GenrePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+    final width = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (context) => GenreCubit()..init(tag.tag),
       child: BlocBuilder<GenreCubit, GenreState>(
@@ -51,6 +53,12 @@ class GenrePage extends StatelessWidget {
                           CachedNetworkImage(
                             imageUrl: tag.image,
                             height: 200,
+                            memCacheHeight: (200 * devicePexelRatio).round(),
+                            memCacheWidth: (width * devicePexelRatio).round(),
+                            maxHeightDiskCache:
+                                (200 * devicePexelRatio).round(),
+                            maxWidthDiskCache:
+                                (width * devicePexelRatio).round(),
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.cover,
                           ),
@@ -144,6 +152,14 @@ class GenrePage extends StatelessWidget {
                                         imageUrl: state.songs[i].coverImageUrl!,
                                         width: 50,
                                         height: 50,
+                                        memCacheHeight:
+                                            (50 * devicePexelRatio).round(),
+                                        memCacheWidth:
+                                            (50 * devicePexelRatio).round(),
+                                        maxHeightDiskCache:
+                                            (50 * devicePexelRatio).round(),
+                                        maxWidthDiskCache:
+                                            (50 * devicePexelRatio).round(),
                                         progressIndicatorBuilder:
                                             (context, url, l) =>
                                                 const LoadingImage(),

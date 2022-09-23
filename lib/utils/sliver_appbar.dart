@@ -5,8 +5,8 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/song_model.dart';
+import '../controllers/main_controller.dart';
+import '../models/song_model.dart';
 
 import '../models/user_model.dart';
 
@@ -66,6 +66,15 @@ class MyDelegate extends SliverPersistentHeaderDelegate {
                             imageUrl: user.avatar!,
                             height: 40,
                             fit: BoxFit.cover,
+                            maxHeightDiskCache: 40,
+                            maxWidthDiskCache:
+                                MediaQuery.of(context).size.width.round(),
+                            memCacheHeight:
+                                (40 * MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
+                            memCacheWidth: (MediaQuery.of(context).size.width *
+                                    MediaQuery.of(context).devicePixelRatio)
+                                .round(),
                             width: MediaQuery.of(context).size.width,
                             alignment: Alignment.topLeft,
                           ),
@@ -135,6 +144,15 @@ class MyDelegate extends SliverPersistentHeaderDelegate {
                         child: CachedNetworkImage(
                           imageUrl: user.avatar!,
                           height: 40,
+                          memCacheHeight:
+                              (40 * MediaQuery.of(context).devicePixelRatio)
+                                  .round(),
+                          memCacheWidth: (MediaQuery.of(context).size.width *
+                                  MediaQuery.of(context).devicePixelRatio)
+                              .round(),
+                          maxHeightDiskCache: 40,
+                          maxWidthDiskCache:
+                              MediaQuery.of(context).size.width.round(),
                           fit: BoxFit.cover,
                           width: MediaQuery.of(context).size.width,
                           alignment: Alignment.topCenter,

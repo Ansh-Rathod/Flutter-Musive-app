@@ -2,25 +2,26 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:http/http.dart';
-import 'package:spotify_clone/api/url.dart';
-import 'package:spotify_clone/methods/get_response.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/models/user.dart';
+import '../api/url.dart';
+import '../methods/get_response.dart';
+import '../models/song_model.dart';
+import '../models/user.dart';
 
 class GetHomePage {
   Future<List<User>> getUsers() async {
-    final query = {
-      "page": (Random().nextInt(8)).toString(),
+    final Map<String, String> query = {
+      "page": 0.toString(),
       "limit": 26.toString()
     };
     Response res =
         await getResponse(Uri.https(baseUrl, basePath + '/users', query));
     if (res.statusCode == 200) {
       final body = jsonDecode(res.body);
-
+      print(body);
       final users = (body['results'] as List)
           .map<User>((user) => User.fromJson(user))
           .toList();
+
       return users;
     } else {
       throw Exception('Failed to load users');

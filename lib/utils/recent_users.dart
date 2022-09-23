@@ -1,10 +1,11 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-
+import '../controllers/main_controller.dart';
 import '../methods/get_greeting.dart';
+
 import '../models/user.dart';
 import '../screens/artist_profile/artist_profile.dart';
 import 'loading.dart';
@@ -20,6 +21,9 @@ class RecentUsers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
+    final greet = greeting();
     return Stack(
       children: [
         CachedNetworkImage(
@@ -27,6 +31,12 @@ class RecentUsers extends StatelessWidget {
           fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height * .15,
           width: MediaQuery.of(context).size.width * .67,
+          memCacheHeight: ((MediaQuery.of(context).size.height * .15) *
+                  MediaQuery.of(context).devicePixelRatio)
+              .round(),
+          memCacheWidth: ((MediaQuery.of(context).size.width * .67) *
+                  MediaQuery.of(context).devicePixelRatio)
+              .round(),
           alignment: Alignment.topLeft,
         ),
         BackdropFilter(
@@ -38,7 +48,7 @@ class RecentUsers extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
-                  greeting(),
+                  greet,
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
@@ -56,7 +66,7 @@ class RecentUsers extends StatelessWidget {
                               onTap: () {
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    CupertinoPageRoute(
                                         builder: (context) => ArtistProfile(
                                               username: user.username!,
                                               con: con,
@@ -82,6 +92,14 @@ class RecentUsers extends StatelessWidget {
                                         imageUrl: user.avatar!,
                                         width: 55,
                                         height: 55,
+                                        memCacheHeight:
+                                            (55 * devicePexelRatio).round(),
+                                        memCacheWidth:
+                                            (55 * devicePexelRatio).round(),
+                                        maxHeightDiskCache:
+                                            (55 * devicePexelRatio).round(),
+                                        maxWidthDiskCache:
+                                            (55 * devicePexelRatio).round(),
                                         progressIndicatorBuilder:
                                             (context, url, l) =>
                                                 const LoadingImage(),

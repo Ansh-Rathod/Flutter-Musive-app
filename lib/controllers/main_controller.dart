@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:spotify_clone/models/song_model.dart';
+import '../models/song_model.dart';
 
 class MainController extends ChangeNotifier {
   var audios = <Audio>[
@@ -66,7 +66,7 @@ class MainController extends ChangeNotifier {
       return false;
     }));
     final recentSongs = getRecentlyPlayed();
-    recentSongs.sort((a, b) => a["created"].compareTo(b["created"]));
+    recentSongs.sort((a, b) => b["created"].compareTo(a["created"]));
     if (recentSongs.isNotEmpty) {
       audios.removeAt(0);
     }

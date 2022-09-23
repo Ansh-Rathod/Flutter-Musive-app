@@ -2,7 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
+import '../controllers/main_controller.dart';
 
 import 'loading.dart';
 
@@ -28,6 +28,8 @@ class _PlayListWidgetState extends State<PlayListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -70,6 +72,12 @@ class _PlayListWidgetState extends State<PlayListWidget> {
                                   .image!.path,
                               width: 50,
                               height: 50,
+                              memCacheHeight: (50 * devicePexelRatio).round(),
+                              memCacheWidth: (50 * devicePexelRatio).round(),
+                              maxHeightDiskCache:
+                                  (50 * devicePexelRatio).round(),
+                              maxWidthDiskCache:
+                                  (50 * devicePexelRatio).round(),
                               progressIndicatorBuilder: (context, url, l) =>
                                   const LoadingImage(),
                               fit: BoxFit.cover,
@@ -160,6 +168,14 @@ class _PlayListWidgetState extends State<PlayListWidget> {
                                   imageUrl: newAudio.metas.image!.path,
                                   width: 50,
                                   height: 50,
+                                  memCacheHeight: (50 *
+                                          MediaQuery.of(context)
+                                              .devicePixelRatio)
+                                      .round(),
+                                  memCacheWidth: (50 *
+                                          MediaQuery.of(context)
+                                              .devicePixelRatio)
+                                      .round(),
                                   progressIndicatorBuilder: (context, url, l) =>
                                       const LoadingImage(),
                                   fit: BoxFit.cover,

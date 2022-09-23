@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:spotify_clone/api/url.dart';
-import 'package:spotify_clone/methods/get_response.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/models/user.dart';
+import '../api/url.dart';
+import '../methods/get_response.dart';
+import '../models/song_model.dart';
+import '../models/user.dart';
 
 class SearchRepository {
   Future<List<User>> getUsers(String tag) async {

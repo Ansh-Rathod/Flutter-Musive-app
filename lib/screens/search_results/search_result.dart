@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/screens/artist_profile/artist_profile.dart';
-import 'package:spotify_clone/utils/botttom_sheet_widget.dart';
-import 'package:spotify_clone/utils/loading.dart';
-import 'package:spotify_clone/utils/recent_search.dart';
+import '../../controllers/main_controller.dart';
+import '../../models/loading_enum.dart';
+import '../artist_profile/artist_profile.dart';
+import '../../utils/botttom_sheet_widget.dart';
+import '../../utils/loading.dart';
+import '../../utils/recent_search.dart';
 
 import 'cubit/search_results_cubit.dart';
 
@@ -21,6 +22,8 @@ class SearchResultsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return BlocProvider(
         create: (context) => SearchResultsCubit(),
         child: BlocBuilder<SearchResultsCubit, SearchResultsState>(
@@ -93,6 +96,14 @@ class SearchResultsPage extends StatelessWidget {
                                                   state.songs[i].coverImageUrl!,
                                               width: 50,
                                               height: 50,
+                                              memCacheHeight: (50 *
+                                                      MediaQuery.of(context)
+                                                          .devicePixelRatio)
+                                                  .round(),
+                                              memCacheWidth: (50 *
+                                                      MediaQuery.of(context)
+                                                          .devicePixelRatio)
+                                                  .round(),
                                               progressIndicatorBuilder:
                                                   (context, url, l) =>
                                                       const LoadingImage(),
@@ -184,7 +195,7 @@ class SearchResultsPage extends StatelessWidget {
                                 });
                                 Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    CupertinoPageRoute(
                                         builder: (context) => ArtistProfile(
                                             username: state.users[i].username!,
                                             con: con)));
@@ -200,6 +211,14 @@ class SearchResultsPage extends StatelessWidget {
                                         imageUrl: state.users[i].avatar!,
                                         width: 50,
                                         height: 50,
+                                        memCacheHeight:
+                                            (70 * devicePexelRatio).round(),
+                                        memCacheWidth:
+                                            (70 * devicePexelRatio).round(),
+                                        maxHeightDiskCache:
+                                            (70 * devicePexelRatio).round(),
+                                        maxWidthDiskCache:
+                                            (70 * devicePexelRatio).round(),
                                         progressIndicatorBuilder:
                                             (context, url, l) =>
                                                 const LoadingImage(),

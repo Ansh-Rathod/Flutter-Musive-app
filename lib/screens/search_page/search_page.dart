@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/string_methods.dart';
-import 'package:spotify_clone/models/catagory.dart';
-import 'package:spotify_clone/screens/genre_page/genre_page.dart';
-import 'package:spotify_clone/screens/search_results/search_result.dart';
+import '../../controllers/main_controller.dart';
+import '../../methods/string_methods.dart';
+import '../../models/catagory.dart';
+import '../genre_page/genre_page.dart';
+import '../search_results/search_result.dart';
 
 class SearchPage extends StatelessWidget {
   final MainController con;
@@ -62,22 +62,20 @@ class SearchPage extends StatelessWidget {
                         ),
                   ),
                 ),
-                GridView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      childAspectRatio: 16 / 8,
-                    ),
-                    children: [
-                      ...allTags
-                          .sublist(0, 4)
-                          .map((e) => TagWidget(tag: e, con: con))
-                          .toList()
-                    ]),
+                GridView.builder(
+                  itemCount: allTags.sublist(0, 4).length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 14,
+                    crossAxisSpacing: 14,
+                    childAspectRatio: 16 / 8,
+                  ),
+                  itemBuilder: (context, i) {
+                    return TagWidget(tag: allTags.sublist(0, 4)[i], con: con);
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: Text(
@@ -87,22 +85,20 @@ class SearchPage extends StatelessWidget {
                         ),
                   ),
                 ),
-                GridView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      childAspectRatio: 16 / 8,
-                    ),
-                    children: [
-                      ...allTags
-                          .sublist(4)
-                          .map((e) => TagWidget(tag: e, con: con))
-                          .toList()
-                    ]),
+                GridView.builder(
+                  itemCount: allTags.sublist(4).length,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 14,
+                    crossAxisSpacing: 14,
+                    childAspectRatio: 16 / 8,
+                  ),
+                  itemBuilder: (context, i) {
+                    return TagWidget(tag: allTags.sublist(4)[i], con: con);
+                  },
+                ),
                 const SizedBox(height: 10),
               ],
             ),
@@ -128,7 +124,7 @@ class TagWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(
+            CupertinoPageRoute(
                 builder: (context) => GenrePage(
                       tag: tag,
                       con: con,
@@ -174,6 +170,14 @@ class TagWidget extends StatelessWidget {
                         fit: BoxFit.cover,
                         width: 70,
                         height: 70,
+                        maxHeightDiskCache: 120,
+                        maxWidthDiskCache: 120,
+                        memCacheHeight:
+                            (120 * MediaQuery.of(context).devicePixelRatio)
+                                .round(),
+                        memCacheWidth:
+                            (120 * MediaQuery.of(context).devicePixelRatio)
+                                .round(),
                       ),
                     ),
                   ),
@@ -207,7 +211,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
       onTap: () {
         Navigator.push(
             context,
-            MaterialPageRoute(
+            CupertinoPageRoute(
                 builder: (context) => SearchResultsPage(
                       con: con,
                     )));

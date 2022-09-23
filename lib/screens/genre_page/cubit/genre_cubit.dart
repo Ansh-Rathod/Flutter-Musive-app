@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/models/user.dart';
-import 'package:spotify_clone/repositories/get_genre_data.dart';
+import '../../../controllers/main_controller.dart';
+import '../../../models/loading_enum.dart';
+import '../../../models/song_model.dart';
+import '../../../models/user.dart';
+import '../../../repositories/get_genre_data.dart';
 
 part 'genre_state.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/models/loading_enum.dart';
-import 'package:spotify_clone/utils/horizontal_songs_list.dart';
+import '../../controllers/main_controller.dart';
+import '../../models/loading_enum.dart';
+import '../../utils/horizontal_songs_list.dart';
 
 import '../../utils/recent_users.dart';
 import 'cubit/home_cubit.dart';

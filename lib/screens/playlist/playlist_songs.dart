@@ -4,11 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/snackbar.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/utils/botttom_sheet_widget.dart';
-import 'package:spotify_clone/utils/loading.dart';
+import '../../controllers/main_controller.dart';
+import '../../methods/snackbar.dart';
+import '../../models/song_model.dart';
+import '../../utils/botttom_sheet_widget.dart';
+import '../../utils/loading.dart';
 
 class PlaylistSongs extends StatelessWidget {
   final MainController con;
@@ -23,6 +23,7 @@ class PlaylistSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
     List<dynamic> data = [];
     return Scaffold(
         body: FutureBuilder<Box<dynamic>>(
@@ -44,6 +45,14 @@ class PlaylistSongs extends StatelessWidget {
                               CachedNetworkImage(
                                 imageUrl: coverImage,
                                 height: 200,
+                                memCacheHeight: (200 *
+                                        MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
+                                memCacheWidth: (MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                        MediaQuery.of(context).devicePixelRatio)
+                                    .round(),
                                 width: MediaQuery.of(context).size.width,
                                 fit: BoxFit.cover,
                               ),
@@ -135,6 +144,14 @@ class PlaylistSongs extends StatelessWidget {
                                           imageUrl: info['cover'],
                                           width: 50,
                                           height: 50,
+                                          memCacheHeight:
+                                              (70 * devicePexelRatio).round(),
+                                          memCacheWidth:
+                                              (70 * devicePexelRatio).round(),
+                                          maxHeightDiskCache:
+                                              (70 * devicePexelRatio).round(),
+                                          maxWidthDiskCache:
+                                              (70 * devicePexelRatio).round(),
                                           placeholder: (context, u) =>
                                               const LoadingImage(),
                                           fit: BoxFit.cover),

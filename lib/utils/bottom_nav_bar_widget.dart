@@ -54,7 +54,7 @@ class CustomCupertinoTabBar extends StatelessWidget
   final Border? border;
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(120);
 
   /// Indicates whether the tab bar is fully opaque or can have contents behind
   /// it show through it.

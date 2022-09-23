@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -24,29 +26,26 @@ class CurrentPlayingSong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: con.player.builderCurrent(builder: (context, playing) {
-      final myAudio = con.find(con.audios, playing.audio.assetAudioPath);
-      return Stack(
-        children: [
-          CachedNetworkImage(
-            imageUrl: myAudio.metas.image!.path,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .7,
-            progressIndicatorBuilder: (context, url, l) => const LoadingImage(),
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-          ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
-            child: Container(
-              color: Colors.black38,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+    return Container(
+        child: con.player.builderCurrent(builder: (context, playing) {
+      if (playing != null) {
+        final myAudio = con.find(con.audios, playing.audio.assetAudioPath);
+        return Container(
+          color: Colors.black38,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
                   children: [
+                    const SizedBox(
+                      height: 30,
+                    ),
                     SafeArea(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -118,172 +117,169 @@ class CurrentPlayingSong extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(26.0),
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(3),
-                          child: CachedNetworkImage(
-                            imageUrl: myAudio.metas.image!.path,
-                            progressIndicatorBuilder: (context, url, l) =>
-                                const LoadingImage(
-                              icon: Icon(
-                                LineIcons.compactDisc,
-                                size: 120,
-                              ),
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0),
-                                    child: Text(
-                                      myAudio.metas.title!,
-                                      maxLines: 1,
-                                      style:
-                                          Theme.of(context).textTheme.headline4,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24.0),
-                                    child: Text(
-                                      myAudio.metas.artist!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1!
-                                          .copyWith(color: Colors.grey),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            LikeButton(
-                              name: myAudio.metas.title!,
-                              fullname: myAudio.metas.artist!,
-                              username: myAudio.metas.album!,
-                              id: myAudio.metas.id!,
-                              track: myAudio.path,
-                              isIcon: false,
-                              cover: myAudio.metas.image!.path,
-                            ),
-                            const SizedBox(width: 24)
-                          ],
-                        ),
-                        con.player.builderCurrent(
-                          builder: (context, Playing? playing) {
-                            return Column(children: <Widget>[
-                              con.player.builderRealtimePlayingInfos(builder:
-                                  (context, RealtimePlayingInfos? infos) {
-                                if (infos == null) {
-                                  return const SizedBox();
-                                }
-                                return PositionSeekWidget(
-                                  currentPosition: infos.currentPosition,
-                                  duration: infos.duration,
-                                  seekTo: (to) {
-                                    con.player.seek(to);
-                                  },
-                                );
-                              }),
-                              con.player.builderLoopMode(
-                                builder: (context, loopMode) {
-                                  return PlayerBuilder.isPlaying(
-                                      player: con.player,
-                                      builder: (context, isPlaying) {
-                                        return PlayingControls(
-                                          loopMode: loopMode,
-                                          isPlaying: isPlaying,
-                                          con: con,
-                                          isPlaylist: true,
-                                          onStop: () {
-                                            con.player.stop();
-                                          },
-                                          toggleLoop: () {
-                                            con.player.toggleLoop();
-                                          },
-                                          onPlay: () {
-                                            con.player.playOrPause();
-                                          },
-                                          onNext: () {
-                                            con.player.next(keepLoopMode: true);
-                                          },
-                                          onPrevious: () {
-                                            con.player.previous();
-                                          },
-                                        );
-                                      });
-                                },
-                              ),
-                              const SizedBox(height: 20),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 26.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        launch(myAudio.path);
-                                      },
-                                      child: const Icon(
-                                        Icons.download_sharp,
-                                        color: Colors.grey,
-                                        size: 18,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                PlayListWidget(
-                                              audios:
-                                                  con.player.playlist!.audios,
-                                              con: con,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: const Icon(
-                                        CupertinoIcons.music_note_list,
-                                        color: Colors.grey,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ]);
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
                   ],
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(3),
+                      child: CachedNetworkImage(
+                        imageUrl: myAudio.metas.image!.path,
+                        memCacheHeight: (500 * devicePexelRatio).round(),
+                        memCacheWidth: (500 * devicePexelRatio).round(),
+                        maxHeightDiskCache: (500 * devicePexelRatio).round(),
+                        maxWidthDiskCache: (500 * devicePexelRatio).round(),
+                        progressIndicatorBuilder: (context, url, l) =>
+                            const LoadingImage(
+                          icon: Icon(
+                            LineIcons.compactDisc,
+                            size: 120,
+                          ),
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
+                                child: Text(
+                                  myAudio.metas.title!,
+                                  maxLines: 1,
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 24.0),
+                                child: Text(
+                                  myAudio.metas.artist!,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        LikeButton(
+                          name: myAudio.metas.title!,
+                          fullname: myAudio.metas.artist!,
+                          username: myAudio.metas.album!,
+                          id: myAudio.metas.id!,
+                          track: myAudio.path,
+                          isIcon: false,
+                          cover: myAudio.metas.image!.path,
+                        ),
+                        const SizedBox(width: 24)
+                      ],
+                    ),
+                    Column(children: <Widget>[
+                      con.player.builderRealtimePlayingInfos(
+                          builder: (context, RealtimePlayingInfos? infos) {
+                        if (infos == null) {
+                          return const SizedBox();
+                        }
+                        return PositionSeekWidget(
+                          currentPosition: infos.currentPosition,
+                          duration: infos.duration,
+                          seekTo: (to) {
+                            con.player.seek(to);
+                          },
+                        );
+                      }),
+                      con.player.builderLoopMode(
+                        builder: (context, loopMode) {
+                          return PlayerBuilder.isPlaying(
+                              player: con.player,
+                              builder: (context, isPlaying) {
+                                return PlayingControls(
+                                  loopMode: loopMode,
+                                  isPlaying: isPlaying,
+                                  con: con,
+                                  isPlaylist: true,
+                                  onStop: () {
+                                    con.player.stop();
+                                  },
+                                  toggleLoop: () {
+                                    con.player.toggleLoop();
+                                  },
+                                  onPlay: () {
+                                    con.player.playOrPause();
+                                  },
+                                  onNext: () {
+                                    con.player.next();
+                                  },
+                                  onPrevious: () {
+                                    con.player.previous();
+                                  },
+                                );
+                              });
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 26.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                launch(myAudio.path);
+                              },
+                              child: const Icon(
+                                Icons.download_sharp,
+                                color: Colors.grey,
+                                size: 18,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => PlayListWidget(
+                                      audios: con.player.playlist!.audios,
+                                      con: con,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(
+                                CupertinoIcons.music_note_list,
+                                color: Colors.grey,
+                                size: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ]),
+                  ],
+                ),
+              ],
             ),
           ),
-        ],
-      );
+        );
+      } else {
+        return Container();
+      }
     }));
   }
 }

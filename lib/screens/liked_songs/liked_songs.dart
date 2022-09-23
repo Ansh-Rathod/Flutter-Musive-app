@@ -4,11 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/snackbar.dart';
-import 'package:spotify_clone/models/song_model.dart';
-import 'package:spotify_clone/utils/botttom_sheet_widget.dart';
-import 'package:spotify_clone/utils/loading.dart';
+import '../../controllers/main_controller.dart';
+import '../../methods/snackbar.dart';
+import '../../models/song_model.dart';
+import '../../utils/botttom_sheet_widget.dart';
+import '../../utils/loading.dart';
 
 class LikedSongs extends StatelessWidget {
   final MainController con;
@@ -19,6 +19,8 @@ class LikedSongs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     List<dynamic> data = [];
     return Scaffold(
         body: CustomScrollView(
@@ -37,6 +39,11 @@ class LikedSongs extends StatelessWidget {
                     imageUrl:
                         'https://images.unsplash.com/photo-1578070181910-f1e514afdd08?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=933&q=80',
                     height: 200,
+                    memCacheHeight:
+                        (200 * MediaQuery.of(context).devicePixelRatio).round(),
+                    memCacheWidth: (MediaQuery.of(context).size.width *
+                            MediaQuery.of(context).devicePixelRatio)
+                        .round(),
                     width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
                   ),
@@ -119,6 +126,12 @@ class LikedSongs extends StatelessWidget {
                               imageUrl: info['cover'],
                               width: 50,
                               height: 50,
+                              memCacheHeight: (70 * devicePexelRatio).round(),
+                              memCacheWidth: (70 * devicePexelRatio).round(),
+                              maxHeightDiskCache:
+                                  (70 * devicePexelRatio).round(),
+                              maxWidthDiskCache:
+                                  (70 * devicePexelRatio).round(),
                               placeholder: (context, u) => const LoadingImage(),
                               fit: BoxFit.cover),
                         ),

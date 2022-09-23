@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/methods/get_time_ago.dart';
-import 'package:spotify_clone/methods/snackbar.dart';
-import 'package:spotify_clone/screens/liked_songs/liked_songs.dart';
-import 'package:spotify_clone/screens/playlist/playlist_songs.dart';
-import 'package:spotify_clone/screens/recently_played/recently_played_songs.dart';
-import 'package:spotify_clone/utils/loading.dart';
+import '../../controllers/main_controller.dart';
+import '../../methods/get_time_ago.dart';
+import '../../methods/snackbar.dart';
+import '../liked_songs/liked_songs.dart';
+import '../playlist/playlist_songs.dart';
+import '../recently_played/recently_played_songs.dart';
+import '../../utils/loading.dart';
 
 class Library extends StatelessWidget {
   final MainController con;
@@ -20,6 +20,8 @@ class Library extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return Scaffold(
       appBar: const LibraryAppBar(),
       body: SingleChildScrollView(
@@ -33,7 +35,7 @@ class Library extends StatelessWidget {
               onTap: () async {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    CupertinoPageRoute(
                         builder: (context) => LikedSongs(
                               con: con,
                             )));
@@ -90,7 +92,7 @@ class Library extends StatelessWidget {
               onTap: () async {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    CupertinoPageRoute(
                         builder: (context) => RecentlyPlayedSongs(
                               con: con,
                             )));
@@ -191,7 +193,7 @@ class Library extends StatelessWidget {
                                   onTap: () async {
                                     Navigator.push(
                                         context,
-                                        MaterialPageRoute(
+                                        CupertinoPageRoute(
                                             builder: (context) => PlaylistSongs(
                                                   con: con,
                                                   name: playlists['name'],
@@ -201,7 +203,7 @@ class Library extends StatelessWidget {
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20.0, vertical: 6),
+                                        horizontal: 20.0, vertical: 8),
                                     child: Row(
                                       children: [
                                         ClipRRect(
@@ -211,6 +213,17 @@ class Library extends StatelessWidget {
                                               imageUrl: playlists['coverImage'],
                                               width: 60,
                                               height: 60,
+                                              memCacheHeight: (70 * devicePexelRatio)
+                                                  .round(),
+                                              memCacheWidth:
+                                                  (70 * devicePexelRatio)
+                                                      .round(),
+                                              maxHeightDiskCache:
+                                                  (70 * devicePexelRatio)
+                                                      .round(),
+                                              maxWidthDiskCache:
+                                                  (70 * devicePexelRatio)
+                                                      .round(),
                                               placeholder: (context, u) =>
                                                   const LoadingImage(
                                                     icon: Icon(LineIcons.user),
@@ -233,7 +246,7 @@ class Library extends StatelessWidget {
                                                 height: 4,
                                               ),
                                               Text(
-                                                "Created By you " +
+                                                "Created by you " +
                                                     "".displayTimeAgoFromTimestamp(
                                                         playlists['created']),
                                                 style: const TextStyle(

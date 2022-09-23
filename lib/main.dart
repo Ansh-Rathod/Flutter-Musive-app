@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:spotify_clone/screens/bottom_nav_bar/bottom_nav_bar.dart';
+import 'screens/bottom_nav_bar/bottom_nav_bar.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Spotify Clone',
+      title: 'Musive',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Proxima',
         canvasColor: Colors.transparent,
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         );
       },
-      home: const App(),
+      home: const BottomNavBarThree(),
     );
   }
 }

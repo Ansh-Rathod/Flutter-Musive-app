@@ -2,35 +2,31 @@ import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:spotify_clone/controllers/main_controller.dart';
-import 'package:spotify_clone/screens/current_playing/current_playing_song.dart';
+import '../controllers/main_controller.dart';
 
 import 'loading.dart';
 
 class PlayWidget extends StatelessWidget {
   final MainController con;
+  final void Function()? onTap;
   const PlayWidget({
     Key? key,
     required this.con,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final devicePexelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return con.player.builderCurrent(builder: (context, playing) {
       final myAudio = con.find(con.audios, playing.audio.assetAudioPath);
-      return InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CurrentPlayingSong(
-                con: con,
-              ),
-            ),
-          );
-        },
+      return GestureDetector(
+        onTap: onTap,
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 3),
           decoration: BoxDecoration(
             border: Border.all(
               color: Colors.black12,
@@ -40,18 +36,23 @@ class PlayWidget extends StatelessWidget {
             boxShadow: kElevationToShadow[9],
           ),
           child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
             child: Stack(
               children: [
                 CachedNetworkImage(
                   imageUrl: myAudio.metas.image!.path,
                   width: MediaQuery.of(context).size.width,
                   height: 40,
+                  memCacheHeight: (70 * devicePexelRatio).round(),
+                  memCacheWidth: (70 * devicePexelRatio).round(),
+                  maxHeightDiskCache: (70 * devicePexelRatio).round(),
+                  maxWidthDiskCache: (70 * devicePexelRatio).round(),
                   progressIndicatorBuilder: (context, url, l) =>
                       const LoadingImage(),
                   fit: BoxFit.cover,
                 ),
                 BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                  filter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 4.0, horizontal: 8),
@@ -67,6 +68,14 @@ class PlayWidget extends StatelessWidget {
                                   imageUrl: myAudio.metas.image!.path,
                                   width: 40,
                                   height: 40,
+                                  memCacheHeight:
+                                      (70 * devicePexelRatio).round(),
+                                  memCacheWidth:
+                                      (70 * devicePexelRatio).round(),
+                                  maxHeightDiskCache:
+                                      (70 * devicePexelRatio).round(),
+                                  maxWidthDiskCache:
+                                      (70 * devicePexelRatio).round(),
                                   progressIndicatorBuilder: (context, url, l) =>
                                       const LoadingImage(),
                                   fit: BoxFit.cover,
